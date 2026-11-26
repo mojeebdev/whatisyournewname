@@ -25,7 +25,7 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const result = fromCombo(searchParams.get("c") ?? "");
   const who = cleanName(searchParams.get("n"));
-  const host = SITE_URL.replace(/^https?:\\/\\//, "");
+  const host = new URL(SITE_URL).host;
 
   const frame = (children: React.ReactNode) => (
     <div
