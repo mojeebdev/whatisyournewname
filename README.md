@@ -19,15 +19,46 @@ npm install
 npm run dev
 ```
 
-## Deploy (Vercel)
+## Deploy to Cloudflare Workers
 
-1. Import the repo into Vercel.
-2. Set `NEXT_PUBLIC_SITE_URL` to your production URL (e.g. `https://newname.mojeeb.xyz`). Without it, Vercel's production domain is used.
-3. Deploy, then paste a result link into the [X Card Validator](https://cards-dev.x.com/validator) or a draft post to check the preview.
+This app uses the OpenNext Cloudflare adapter. It must run as a Worker because the result pages and PNG card endpoint are dynamic. Do not configure it as a static Pages export.
 
-## How sharing to X works
+### Local production preview
 
-X's post intent can't attach images, so **Post to X** shares the result link and X pulls the card from that page's `og:image` / `twitter:image` tags. To post the image directly instead, tap **Save card** and attach it.
+```bash
+npm install
+npm run preview
+```
+
+This builds the Next.js app for the Workers runtime and starts a local Wrangler preview.
+
+### Deploy from your terminal
+
+Authenticate Wrangler first, then run:
+
+```bash
+npx wrangler login
+npm run deploy
+```
+
+The Worker name is `what-is-your-new-name`. Cloudflare will provide a `workers.dev` URL after the first deployment.
+
+### Connect GitHub to Cloudflare
+
+In Cloudflare, open **Workers & Pages → Create application → Workers → Import a repository**, select this repository, and configure the production branch as `main`. Use the repository's normal dependency installation and the `npm run deploy` build/deploy script. Keep the app on Workers Builds, not a static Pages project.
+
+### Custom domain
+
+After the first successful Worker deployment:
+
+1. Open the Worker **what-is-your-new-name** in Cloudflare.
+2. Open **Settings → Domains & Routes → Add → Custom Domain**.
+3. Add `newname.mojeeb.xyz`. Cloudflare will provision the required DNS record and certificate because the domain is managed by Cloudflare.
+4. Set `NEXT_PUBLIC_SITE_URL=https://newname.mojeeb.xyz` as a production build/runtime variable if you later change the hostname. The app already defaults to this hostname.
+
+### X card verification
+
+After deployment, test a result URL such as `https://newname.mojeeb.xyz/n/m9?n=Ada`. Its Open Graph and Twitter metadata should point to the dynamic `/api/card` PNG endpoint. Verify the preview with the [X Card Validator](https://cards-dev.x.com/validator) or a draft post.
 
 ## Files
 
@@ -38,3 +69,5 @@ X's post intent can't attach images, so **Post to X** shares the result link and
 | `app/n/[combo]/page.tsx` | Share landing page and X card meta tags |
 | `app/api/card/route.tsx` | PNG card generator |
 | `components/Fan.tsx` | Tail-feather fan motif (SVG, used in the UI and on the card) |
+| `wrangler.jsonc` | Cloudflare Worker configuration |
+| `open-next.config.ts` | OpenNext Cloudflare adapter configuration |
