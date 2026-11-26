@@ -3,7 +3,7 @@ import { fromCombo, cleanName } from "@/lib/names";
 import { SITE_URL } from "@/lib/site";
 import { Fan } from "@/components/Fan";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 const W = 1200;
 const H = 630;
