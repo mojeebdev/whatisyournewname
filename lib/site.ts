@@ -1,10 +1,8 @@
 // Absolute base URL — X needs absolute og:image URLs.
-// Set NEXT_PUBLIC_SITE_URL in production (e.g. https://newname.mojeeb.xyz).
+// NEXT_PUBLIC_SITE_URL can override this at build/runtime; the production
+// hostname is the safe default so previews never fall back to localhost/Vercel.
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "http://localhost:3000")
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://newname.mojeeb.xyz"
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "What Is Your New Name?";

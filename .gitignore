@@ -1,8 +1,12 @@
 node_modules
 .next
+.open-next
+.wrangler
+.dev.vars*
 out
 .env*
 !.env.example
 *.tsbuildinfo
 next-env.d.ts
+cloudflare-env.d.ts
 .vercel

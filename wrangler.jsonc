@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "what-is-your-new-name",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-11-26",
+  "compatibility_flags": ["nodejs_compat"],
+  "upload_source_maps": true,
+  "workers_dev": true,
+  "vars": {
+    "NEXT_PUBLIC_SITE_URL": "https://newname.mojeeb.xyz"
+  },
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "what-is-your-new-name"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}
