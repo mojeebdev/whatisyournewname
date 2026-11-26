@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "what-is-your-new-name",
+  "name": "whatisyournewname",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-11-26",
   "compatibility_flags": ["nodejs_compat"],
@@ -16,7 +16,7 @@
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
-      "service": "what-is-your-new-name"
+      "service": "whatisyournewname"
     }
   ],
   "observability": {
